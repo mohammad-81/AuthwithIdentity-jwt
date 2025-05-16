@@ -1,4 +1,4 @@
-namespace jwtAyth_Identity_
+namespace jwtAuth_Identity_
 {
     public class WeatherForecast
     {

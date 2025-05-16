@@ -1,5 +1,5 @@
-
-namespace jwtAyth_Identity_
+﻿
+namespace jwtAuth_Identity_
 {
     public class Program
     {
@@ -10,6 +10,8 @@ namespace jwtAyth_Identity_
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer(); // لازم برای swagger
+            builder.Services.AddSwaggerGen();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -18,6 +20,8 @@ namespace jwtAyth_Identity_
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.MapOpenApi();
             }
 

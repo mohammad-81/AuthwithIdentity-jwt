@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace jwtAyth_Identity_.Controllers
+namespace jwtAuth_Identity_.Controllers
 {
     [ApiController]
     [Route("[controller]")]
