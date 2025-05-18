@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace jwtAuth_Identity_.Data
 {
-    public class ApplicationDBContext: DbContext
+    public class ApplicationDBContext:IdentityDbContext<ApplicationUser, IdentityRole<long>, long>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
