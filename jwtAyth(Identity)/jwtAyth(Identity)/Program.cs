@@ -1,8 +1,11 @@
 ﻿
 using jwtAuth_Identity_.Data;
 using jwtAuth_Identity_.Entities;
+using jwtAuth_Identity_.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace jwtAuth_Identity_
 {
@@ -20,7 +23,31 @@ namespace jwtAuth_Identity_
                 .AddEntityFrameworkStores<ApplicationDBContext>()
                 .AddDefaultTokenProviders();
 
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+                .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+
+                };
+            });
+
             builder.Services.AddControllers();
+            builder.Services.AddScoped<JWTService>();
             builder.Services.AddEndpointsApiExplorer(); // لازم برای swagger
             builder.Services.AddSwaggerGen();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
