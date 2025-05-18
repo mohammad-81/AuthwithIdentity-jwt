@@ -1,4 +1,7 @@
 ﻿
+using jwtAuth_Identity_.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace jwtAuth_Identity_
 {
     public class Program
@@ -8,6 +11,8 @@ namespace jwtAuth_Identity_
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<ApplicationDBContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer(); // لازم برای swagger
