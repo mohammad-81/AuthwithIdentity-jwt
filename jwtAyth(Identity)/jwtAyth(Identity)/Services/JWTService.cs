@@ -31,7 +31,7 @@ namespace jwtAuth_Identity_.Services
                    };
             claims.AddRange(userRoles.Select(role=> new Claim(ClaimTypes.Role,role )));
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])); // Encoding requires System.Text
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"])); // Encoding requires System.Text
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["Jwt:ExpireDays"]));
 

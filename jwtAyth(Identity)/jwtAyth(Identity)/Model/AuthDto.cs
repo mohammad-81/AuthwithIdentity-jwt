@@ -1,8 +1,10 @@
-﻿namespace jwtAuth_Identity_.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace jwtAuth_Identity_.Model
 {
     public class AuthDto
     {
-        public class RegisterDTOs
+        public class RegisterDTO
         {
             public string FullName { get; set; }
             public string Email { get; set; }
@@ -36,6 +38,9 @@
         {
             public string CurrentPassword { get; set; }
             public string NewPassword { get; set; }
+
+            [Required]
+            [Compare ("NewPassword",ErrorMessage = "رمز عبور جدید و تکرار آن یکسان نیستند") ]
             public string ConfirmNewPassword { get; set; }
         }
 
