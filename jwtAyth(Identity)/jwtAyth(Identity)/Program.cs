@@ -5,6 +5,7 @@ using jwtAuth_Identity_.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -20,7 +21,21 @@ namespace jwtAuth_Identity_
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>(option =>
+            {
+                option.Password.RequireDigit = true;
+                option.Password.RequireNonAlphanumeric = true;
+                option.Password.RequireUppercase = true;
+                option.Password.RequireLowercase = true;
+                option.Password.RequiredLength = 6;
+
+                option.User.RequireUniqueEmail = true;
+
+                option.Lockout.MaxFailedAccessAttempts = 6;
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+
+            })
+
                 .AddEntityFrameworkStores<ApplicationDBContext>()
                 .AddDefaultTokenProviders();
 
