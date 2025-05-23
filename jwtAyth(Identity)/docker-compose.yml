@@ -1,0 +1,6 @@
+services:
+  jwtauthidentity:
+    image: ${DOCKER_REGISTRY-}jwtauthidentity
+    build:
+      context: .
+      dockerfile: jwtAyth(Identity)/Dockerfile
